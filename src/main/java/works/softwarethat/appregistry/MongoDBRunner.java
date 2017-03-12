@@ -14,7 +14,7 @@ import de.flapdoodle.embed.process.runtime.Network;
 /**
  * Mongo DB runner.
  *
- * @author MONN@nykredit.dk
+ * @author mortena@gmail.com
  */
 
 public class MongoDBRunner {

@@ -15,13 +15,13 @@ import org.slf4j.LoggerFactory;
 /**
  * Starts the app registry application services.
  *
- * @author MONN@nykredit.dk
+ * @author mortena@gmail.com
  */
 
 public class Main {
     private static final Logger LOGGER = LoggerFactory.getLogger(Main.class);
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         Options options = new Options();
         Option help = Option.builder("h")
             .argName("help")
@@ -73,6 +73,11 @@ public class Main {
                     System.out.println("Unable to start mongo db.");
                 }
             }
+
+            AppParameters parameters = new AppParameters("localhost", 8888, mHost, mPort);
+
+            AppService appService = new AppService(parameters);
+            appService.start();
         } catch (ParseException e) {
             System.out.println("Invalid arguments for program.");
             printHelp(options);
