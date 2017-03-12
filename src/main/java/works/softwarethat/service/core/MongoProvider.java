@@ -1,4 +1,4 @@
-package works.softwarethat.service.general;
+package works.softwarethat.service.core;
 
 import com.google.inject.Provider;
 import io.vertx.core.Vertx;

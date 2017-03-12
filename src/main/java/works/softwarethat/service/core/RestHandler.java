@@ -1,4 +1,4 @@
-package works.softwarethat.service.general;
+package works.softwarethat.service.core;
 
 import io.vertx.core.Handler;
 import io.vertx.ext.web.RoutingContext;

@@ -8,7 +8,7 @@ import io.vertx.ext.web.RoutingContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import works.softwarethat.appregistry.cli.exposure.model.ApplicationsRepresentation;
-import works.softwarethat.service.general.RestHandler;
+import works.softwarethat.service.core.RestHandler;
 import works.softwarethat.appregistry.cli.services.ApplicationsArchivist;
 
 /**

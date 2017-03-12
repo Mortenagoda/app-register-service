@@ -4,8 +4,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import works.softwarethat.appregistry.cli.exposure.ApplicationsExposure;
-import works.softwarethat.service.general.ApplicationConfig;
-import works.softwarethat.service.general.RestHandler;
+import works.softwarethat.service.core.ApplicationConfig;
+import works.softwarethat.service.core.RestHandler;
 
 /**
  * App configuration.

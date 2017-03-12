@@ -4,7 +4,7 @@ import io.vertx.core.Vertx;
 import io.vertx.core.VertxOptions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import works.softwarethat.service.general.ServiceStarter;
+import works.softwarethat.service.core.ServiceStarter;
 
 /**
  * Starts the app registry application services.

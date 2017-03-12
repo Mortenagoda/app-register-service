@@ -1,4 +1,4 @@
-package works.softwarethat.service.general;
+package works.softwarethat.service.core;
 
 /**
  * Application parameters to start the service.

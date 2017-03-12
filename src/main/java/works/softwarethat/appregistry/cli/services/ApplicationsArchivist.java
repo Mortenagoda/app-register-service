@@ -9,7 +9,7 @@ import io.vertx.core.json.JsonObject;
 import io.vertx.ext.mongo.MongoClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import works.softwarethat.service.general.Archivist;
+import works.softwarethat.service.core.Archivist;
 import works.softwarethat.appregistry.cli.model.Application;
 
 /**

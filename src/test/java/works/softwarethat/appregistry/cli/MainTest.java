@@ -12,7 +12,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.LoggerFactory;
 import works.softwarethat.appregistry.cli.exposure.model.ApplicationsRepresentation;
-import works.softwarethat.service.general.ServiceStarter;
+import works.softwarethat.service.core.ServiceStarter;
 
 /**
  * Tests the application.
