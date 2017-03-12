@@ -1,7 +1,7 @@
-package works.softwarethat.appregistry;
+package works.softwarethat.service.general;
 
 import com.google.inject.AbstractModule;
-import org.mongodb.morphia.Datastore;
+import io.vertx.ext.mongo.MongoClient;
 
 /**
  * Application module wiring everything up.
@@ -17,6 +17,6 @@ public class AppModule extends AbstractModule {
 
     @Override
     protected void configure() {
-        bind(Datastore.class).toProvider(mongoProvider);
+        bind(MongoClient.class).toProvider(mongoProvider);
     }
 }

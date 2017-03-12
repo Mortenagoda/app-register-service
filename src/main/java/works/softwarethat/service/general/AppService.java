@@ -1,18 +1,17 @@
-package works.softwarethat.appregistry;
+package works.softwarethat.service.general;
+
+import java.util.List;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
-import io.netty.handler.codec.http.cors.CorsHandler;
+import io.vertx.core.AsyncResult;
 import io.vertx.core.Handler;
 import io.vertx.core.Vertx;
-import io.vertx.core.VertxOptions;
 import io.vertx.core.http.HttpMethod;
 import io.vertx.core.http.HttpServer;
 import io.vertx.core.http.HttpServerOptions;
 import io.vertx.ext.web.Router;
-import io.vertx.ext.web.RoutingContext;
-import works.softwarethat.appregistry.rest.handlers.ApplicationsHandler;
-import works.softwarethat.appregistry.services.ApplicationsArchivist;
+import works.softwarethat.appregistry.cli.services.ApplicationsArchivist;
 
 /**
  * The actual service application.
@@ -20,23 +19,25 @@ import works.softwarethat.appregistry.services.ApplicationsArchivist;
  * @author mortena@gmail.com
  */
 public class AppService {
+    private static final String DB_NAME = "AppRegistry";
     private final AppParameters appParameters;
+    private final Vertx vertx;
+    private final List<Class<? extends RestHandler>> restHandlers;
 
-    public AppService(AppParameters appParameters) {
+    public AppService(AppParameters appParameters, Vertx vertx, List<Class<? extends RestHandler>> restHandlers) {
+        this.vertx = vertx;
         this.appParameters = appParameters;
+        this.restHandlers = restHandlers;
     }
 
-    public void start() {
-        MongoProvider mongoProvider = new MongoProvider(appParameters.getMongoHost(), appParameters.getMongoPort(), "AppRegistry");
+    public void start(Handler<AsyncResult<HttpServer>> httpServerListenHandler) {
+
+        MongoProvider mongoProvider = new MongoProvider(appParameters.getMongoHost(), appParameters.getMongoPort(), DB_NAME, vertx);
 
         AppModule appModule = new AppModule(mongoProvider);
         Injector injector = Guice.createInjector(appModule);
 
         ApplicationsArchivist instance = injector.getInstance(ApplicationsArchivist.class);
-        System.out.println("Got archivist: " + instance);
-
-        VertxOptions options = new VertxOptions();
-        Vertx vertx = Vertx.vertx(options);
 
         HttpServer httpServer =
             vertx.createHttpServer(new HttpServerOptions().setPort(appParameters.getServerPort()).setHost(appParameters.getServerHost()));
@@ -50,11 +51,12 @@ public class AppService {
             .allowedMethod(HttpMethod.HEAD)
         );
 
-        ApplicationsHandler applicationsHandler = injector.getInstance(ApplicationsHandler.class);
-        router.route(applicationsHandler.getPath()).handler(applicationsHandler);
+        restHandlers.forEach(aClass -> {
+            RestHandler restHandler = injector.getInstance(aClass);
+            router.route(restHandler.getPath()).handler(restHandler);
+        });
 
         httpServer.requestHandler(router::accept)
-            .listen();
+            .listen(httpServerListenHandler);
     }
-
 }
